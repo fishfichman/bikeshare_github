@@ -7,7 +7,7 @@ bikeshare_github
 ### Description
 I completed this R project as part of my Programming for Data Science with R Nanodegree.
 
-With subsets of the bikeshare dataset, I answered questions about trip durations between cities and within cities. I look at summary statistics and visualize trip duration data using ggplot2 and dplyr
+With subsets of the bikeshare dataset, I answered questions about trip durations overall and between cities. I also looked at differences in median trip durations between subscribers and customers in each city. I used summary statistics and visualized trip duration data using ggplot2 and dplyr
 
 ### Files used
 washington.csv
