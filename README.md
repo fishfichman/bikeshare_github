@@ -13,6 +13,7 @@ With subsets of the bikeshare dataset, I answered questions about trip durations
 washington.csv
 new_york_city.csv
 chicago.csv
+bikesharework_20200218.R
 
 ### Credits
 This project was created from the guidance of my Udacity R coursework. This repo is forked from https://github.com/udacity/pdsnd_github
