@@ -1,6 +1,5 @@
 #BikeShareWork by Rachel Fichman 2/17/20
-library(ggplot2)
-library(dplyr)
+library(tidyverse)
 
 #load in raw data, match column names, and clean up User.Type so that blanks are categorized as "Unknown"
 
@@ -34,7 +33,7 @@ sumwash <- sum(wash$Trip.Duration, na.rm = TRUE)
 #Visualize Sum Comparisons
 sumcompare <- ggplot(data = subset(allcities,!is.na(Trip.Duration)), aes(x = City, y = Trip.Duration)) +
   geom_histogram(stat = 'sum') +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   ggtitle('Sum Trip Duration in Seconds Per City') +
   labs(y='Sum Trip Duration')
 sumcompare
@@ -60,7 +59,7 @@ rawboxall <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(y = Tri
   geom_boxplot() +
   ggtitle('Raw Trip Duration Summary Stats') +
   labs(y = 'Trip Duration (seconds)')  +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   facet_wrap(~City)
 rawboxall
 
@@ -72,7 +71,7 @@ zoomboxall <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(y = Tr
   ggtitle('Trip Duration Summary Stats for All Cities') +
   scale_y_continuous(limits = c(0,1500), breaks = seq(0, 1500, 60)) +
   labs(y = 'Trip Duration (seconds)')  +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   facet_wrap(~City)
 zoomboxall
 
@@ -108,4 +107,3 @@ zoomcomp <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(x = User
 zoomcomp
 
 #**From this boxplot comparing subscribers and customers split by city, looks like subscribers tend to take shorter rides than customers in each city.**
-  
