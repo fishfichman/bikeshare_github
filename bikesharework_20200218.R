@@ -1,8 +1,8 @@
-#BikeShareWork by Rachel Fichman 2/17/20
+#BikeShareWork by Rachel Fichman 2/18/20
 library(ggplot2)
 library(dplyr)
 
-#load in raw data, match column names, and clean up User.Type so that blanks are categorized as "Unknown"
+#Load in raw data, match column names, and clean up User.Type so that blanks are categorized as "Unknown"
 
 ny <- read.csv('new_york_city.csv', stringsAsFactors = FALSE)  %>%
   mutate(User.Type = case_when(User.Type == ""~"Unknown", User.Type == NA~"Unknown", TRUE ~ User.Type)) %>%
@@ -16,10 +16,10 @@ wash <- read.csv('washington.csv', stringsAsFactors = FALSE) %>%
   mutate(Gender = NA) %>%
   mutate(Birth.Year = NA)
 
-#bind all together into one df
+#Bind all cities together into one dataframe
 allcities <- rbind(ny, chi, wash)
 
-### Question 1
+### Question 1 ###
 
 #What is the sum of Trip Durations for each city? How do they compare to each other?
 
@@ -29,21 +29,21 @@ sumchi <- sum(chi$Trip.Duration, na.rm = TRUE)
 sumny <- sum(ny$Trip.Duration, na.rm = TRUE)
 sumwash <- sum(wash$Trip.Duration, na.rm = TRUE)
 
-#the total trip durations for each city vary drastically. Chicago has a total of 8,087,801 seconds, New York has 49,490,073 seconds, and Washington has 1,098,835,545
+#The total trip durations for each city vary drastically. Chicago has a total of 8,087,801 seconds, New York has 49,490,073 seconds, and Washington has 1,098,835,545
 
 #Visualize Sum Comparisons
 sumcompare <- ggplot(data = subset(allcities,!is.na(Trip.Duration)), aes(x = City, y = Trip.Duration)) +
   geom_histogram(stat = 'sum') +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   ggtitle('Sum Trip Duration in Seconds Per City') +
   labs(y='Sum Trip Duration')
 sumcompare
 
-#the number of seconds logged in Washington is MUCH higher than New York or Chicago and Chicago has far fewer seconds logged than the others
+#The number of seconds logged in Washington is much higher than New York or Chicago, and Chicago has far fewer seconds logged than the other cities.
 
 #**Overall, the total trip durations for each city vary drastically. Chicago has a total of 8,087,801 seconds, New York has 49,490,073 seconds, and Washington has 1,098,835,545. As seen in the histogram named "sumcompare", the number of seconds logged in Washington is MUCH higher than New York or Chicago and Chicago has far fewer seconds logged than the others. **
 
-### Question 2
+### Question 2 ###
 
 #How do these cities' mean, and median trip durations compare? What is the most common travel time (in minutes) for each city?
 
@@ -53,14 +53,14 @@ summary(ny$Trip.Duration)
 summary(wash$Trip.Duration)
 summary(chi$Trip.Duration)
 
-# Looks like the median time for all cities is between 10-12 minutes (specifically 610, 707 and 670 seconds) but the mean for Washington is much higher than the others (specifically 903.6, 1234, 937.2 seconds)
+# Looks like the median time for all cities is between 10-12 minutes (specifically 610, 707 and 670 seconds) but the mean for Washington is much higher than the others (specifically 903.6, 1234, 937.2 seconds).
 
 #Raw Box Plot of Trip Duration
 rawboxall <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(y = Trip.Duration, color = City)) +
   geom_boxplot() +
   ggtitle('Raw Trip Duration Summary Stats') +
   labs(y = 'Trip Duration (seconds)')  +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   facet_wrap(~City)
 rawboxall
 
@@ -72,7 +72,7 @@ zoomboxall <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(y = Tr
   ggtitle('Trip Duration Summary Stats for All Cities') +
   scale_y_continuous(limits = c(0,1500), breaks = seq(0, 1500, 60)) +
   labs(y = 'Trip Duration (seconds)')  +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   facet_wrap(~City)
 zoomboxall
 
@@ -93,14 +93,13 @@ zoomhistall
 
 #**Looks like the median time for all cities is between 10-12 minutes (specifically 610, 707 and 670 seconds) but the mean for Washington is much higher than the others (specifically 903.6, 1234, 937.2 seconds). Also, the most common trip duration rounded by 1 minute is 6 minutes for each city!**
 
-### Question 3
+### Question 3 ###
 
 #Who tend to take short rides, Subscribers and Customers?
 
-#Again zooming in to the box plot to visualize difference between user types
+#Again, zooming in to the box plot to visualize difference between user types
 zoomcomp <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(x = User.Type, y = Trip.Duration)) +
   geom_boxplot() +
-  #clearly some very large outliers (left the meter running for a very long time in ny) so subset data shown
   scale_y_continuous(limit = c(0,1500)) +
   ggtitle('Trip Duration x User Type x City') +
   labs(x = 'User Types', y = 'Trip Duration') +
@@ -108,4 +107,3 @@ zoomcomp <- ggplot(data = subset(allcities, !is.na(Trip.Duration)), aes(x = User
 zoomcomp
 
 #**From this boxplot comparing subscribers and customers split by city, looks like subscribers tend to take shorter rides than customers in each city.**
-  
