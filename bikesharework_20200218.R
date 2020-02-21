@@ -1,4 +1,4 @@
-#BikeShareWork by Rachel Fichman 2/17/20
+#BikeShareWork by Rachel Fichman 2/18/20
 library(tidyverse)
 
 #load in raw data, match column names, and clean up User.Type so that blanks are categorized as "Unknown"
