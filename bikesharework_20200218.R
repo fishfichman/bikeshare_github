@@ -1,4 +1,4 @@
-#BikeShareWork by Rachel Fichman 2/18/20
+#BikeShareWork by Rachel Fichman 2/20/20
 library(ggplot2)
 library(dplyr)
 
